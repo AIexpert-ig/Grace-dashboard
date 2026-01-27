@@ -3,7 +3,7 @@
  * Production-ready integration layer for FastAPI backend
  */
 
-const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:8000/api';
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000';
 
 class GraceAPIClient {
     constructor(baseURL = API_BASE_URL) {
@@ -32,6 +32,11 @@ class GraceAPIClient {
             console.error(`Request failed: ${endpoint}`, error);
             throw error;
         }
+    }
+
+    // Dashboard Statistics
+    async getDashboardStats() {
+        return this.request('/staff/dashboard-stats');
     }
 
     // Escalations

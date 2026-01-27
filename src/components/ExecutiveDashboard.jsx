@@ -9,6 +9,7 @@ import {
   Bell,
   BarChart3
 } from 'lucide-react';
+import apiClient from '../api-client';
 
 const ExecutiveDashboard = () => {
   const [dashboardData, setDashboardData] = useState(null);
@@ -17,15 +18,10 @@ const ExecutiveDashboard = () => {
   const [error, setError] = useState(null);
   const [lastUpdate, setLastUpdate] = useState(null);
 
-  const API_BASE = 'https://grace-ai.up.railway.app';
-
   // Fetch dashboard statistics
   const fetchDashboardData = async () => {
     try {
-      const response = await fetch(`${API_BASE}/staff/dashboard-stats`);
-      if (!response.ok) throw new Error('Failed to fetch dashboard data');
-
-      const data = await response.json();
+      const data = await apiClient.getDashboardStats();
       setDashboardData(data);
 
       // Extract alerts if they're in the response
@@ -294,10 +290,10 @@ const ExecutiveDashboard = () => {
                       <div
                         key={index}
                         className={`px-6 py-4 transition-all hover:bg-slate-700/20 ${urgency === 'critical' && isPending
-                            ? 'bg-gradient-to-r from-red-500/10 to-transparent border-l-4 border-red-500 animate-pulse'
-                            : urgency === 'high' && isPending
-                              ? 'bg-gradient-to-r from-amber-500/10 to-transparent border-l-4 border-amber-500'
-                              : 'border-l-4 border-transparent'
+                          ? 'bg-gradient-to-r from-red-500/10 to-transparent border-l-4 border-red-500 animate-pulse'
+                          : urgency === 'high' && isPending
+                            ? 'bg-gradient-to-r from-amber-500/10 to-transparent border-l-4 border-amber-500'
+                            : 'border-l-4 border-transparent'
                           }`}
                       >
                         <div className="flex items-start justify-between">
@@ -338,10 +334,10 @@ const ExecutiveDashboard = () => {
                           <div className="flex flex-col items-end space-y-2">
                             <span
                               className={`px-3 py-1 rounded-full text-xs font-medium uppercase ${isPending
-                                  ? 'bg-amber-500/20 text-amber-400'
-                                  : isResolved
-                                    ? 'bg-emerald-500/20 text-emerald-400'
-                                    : 'bg-blue-500/20 text-blue-400'
+                                ? 'bg-amber-500/20 text-amber-400'
+                                : isResolved
+                                  ? 'bg-emerald-500/20 text-emerald-400'
+                                  : 'bg-blue-500/20 text-blue-400'
                                 }`}
                             >
                               {alert.status}
@@ -422,12 +418,12 @@ const ExecutiveDashboard = () => {
                         <div className="flex items-center space-x-3">
                           <div
                             className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-medium ${index === 0
-                                ? 'bg-gradient-to-br from-amber-400 to-amber-600 text-white shadow-lg shadow-amber-500/30'
-                                : index === 1
-                                  ? 'bg-gradient-to-br from-gray-300 to-gray-500 text-white'
-                                  : index === 2
-                                    ? 'bg-gradient-to-br from-orange-500 to-orange-700 text-white'
-                                    : 'bg-slate-700 text-gray-300'
+                              ? 'bg-gradient-to-br from-amber-400 to-amber-600 text-white shadow-lg shadow-amber-500/30'
+                              : index === 1
+                                ? 'bg-gradient-to-br from-gray-300 to-gray-500 text-white'
+                                : index === 2
+                                  ? 'bg-gradient-to-br from-orange-500 to-orange-700 text-white'
+                                  : 'bg-slate-700 text-gray-300'
                               }`}
                           >
                             {index + 1}
